@@ -46,15 +46,18 @@ class InferenceEngine:
 
         # Loading the weights
         if self.infer_config["weights"]:
-            if not os.path.exists(f"heads/{self.id}/current.pth"):
+            if self.infer_config["weights"].endswith(".pth"):
                 shutil.copyfile(
                     self.infer_config["weights"], f"heads/{self.id}/current.pth"
                 )
-                self.logger.info(
-                    "Loading default checkpoint: {} ...".format(
-                        self.infer_config["weights"]
-                    )
+            else:
+                with open(f"heads/{self.id}/current.pth", "wb") as f:
+                    f.write(self.infer_config["weights"].encode("utf-8"))
+            self.logger.info(
+                "Loading default checkpoint: {} ...".format(
+                    self.infer_config["weights"]
                 )
+            )
 
             checkpoint = torch.load(f"heads/{self.id}/current.pth")
             state_dict = checkpoint.get("state_dict", checkpoint)
