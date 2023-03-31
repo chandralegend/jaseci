@@ -8,20 +8,20 @@ from pkg_resources import require
 
 
 MODULES = ["stt", "vc_tts"]
-ORDEREDREQS = ["TTS==0.10.2"]
+# ORDEREDREQS = ["TTS==0.10.2"]
 
 
-def requires(packages):
-    require("pip")
-    CMD_TMPLT = '"' + PYTHON_PATH + '" -m pip install %s'
-    for pkg in packages:
-        system(CMD_TMPLT % (pkg,))
+# def requires(packages):
+#     require("pip")
+#     CMD_TMPLT = '"' + PYTHON_PATH + '" -m pip install %s'
+#     for pkg in packages:
+#         system(CMD_TMPLT % (pkg,))
 
 
-class OrderedInstall(install):
-    def run(self):
-        requires(ORDEREDREQS)
-        install.run(self)
+# class OrderedInstall(install):
+#     def run(self):
+#         requires(ORDEREDREQS)
+#         install.run(self)
 
 
 def get_ver():
@@ -47,8 +47,8 @@ setup(
     name="jac_speech",
     version=get_ver(),
     packages=find_packages(include=["jac_speech", "jac_speech.*"]),
-    install_requires=["jaseci", "pytest>=7.0.1,<7.1", "pytest-order>=1.0.1,<1.1"],
-    cmdclass={"install": OrderedInstall},
+    install_requires=["pytest>=7.0.1,<7.1", "pytest-order>=1.0.1,<1.1"],
+    # cmdclass={"install": OrderedInstall},
     extras_require=get_extras_requires(),
     package_data={
         "": ["*.json", "*.cfg", "VERSION", "*.yaml", "requirements.txt", "*.jac"],
